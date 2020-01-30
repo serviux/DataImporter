@@ -4,7 +4,12 @@ import os, os.path
 import argparse
 import sys
 
-_desc = "Interpret an excel doc and make it store it a JSON file"
+_desc = """
+This program is used to interpret New England Tech's Smash League
+Excel spreadsheet and store it into a json file. The json file is 
+default created in the same directory as the excel file,
+unless specified otherwise.
+"""
 
 ap = argparse.ArgumentParser(description=_desc)
 ap.add_argument("input",  help ="Path to input spreadsheet")
@@ -14,15 +19,15 @@ args = ap.parse_args()
 
 try:
     if args.input is None:
-        raise IOError("File not found")
+        raise IOError("path to excel sheet must be provided")
     elif not os.path.exists(args.input):
-        raise IOError("Path to file does not exist")
+        raise IOError("File not found")
 
     if args.output is not None:
         if not os.path.exists(args.output):
-            raise IOError("Path to file does not exist")
+            raise IOError("Path to output directory does not exist")
 except IOError as e:
-    print(e.strerror)
+    print(e)
     sys.exit(0)
 
 has_out_path = args.output is not None
